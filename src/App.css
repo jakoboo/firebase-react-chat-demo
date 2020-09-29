@@ -1,3 +1,12 @@
+div,
+form,
+input,
+button,
+p,
+img {
+  box-sizing: border-box;
+}
+
 .App {
   height: 100vh;
 
@@ -9,22 +18,32 @@
 }
 
 .app-header {
-  background-color: #f0f0f0;
+  padding: 1rem;
+  width: 100vw;
+  position: fixed;
+  top: 0;
   z-index: 1000;
+
+  background-color: #f0f0f0;
 }
 
 .chat-wrapper {
   display: flex;
   flex-direction: column;
 
-  flex-grow: 1;
-
   background-color: #f0f0f0;
+
+  flex-grow: 1;
 }
 
 .messages-container {
-  padding: 2rem;
+  padding-top: 6rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 6rem;
   flex-grow: 1;
+
+  background-color: #f0f0f0;
 }
 
 .message {
@@ -64,28 +83,39 @@
   text-align: left;
   font-size: 1.2rem;
   line-height: 1.25em;
+  word-wrap: break-word;
 }
 
 form {
-  padding: 2rem;
+  padding: 1.5rem;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+
   display: flex;
   flex-flow: row;
+
+  background-color: #f0f0f0;
 }
 
 form input {
-  padding: 1rem;
+  padding: 0.5rem 1.5rem;
   flex-grow: 1;
 
   background-color: #f0f0f0;
-  border: 0;
+  border: 5px solid #f0f0f0;
+  border-radius: 2.5rem;
+  box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px #ffffff,
+    inset 5px 5px 10px rgba(0, 0, 0, 0.2);
+  outline: 0;
 
   font-size: 2rem;
 }
 
 form button {
   padding: 1rem;
-  margin-left: 2rem;
-  font-size: 3rem;
+  margin-left: 1rem;
+  font-size: 2rem;
 
   background-color: #f0f0f0;
   border: 0;

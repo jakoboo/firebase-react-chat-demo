@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'reset-css';
 import './App.css';
 
@@ -79,12 +79,20 @@ function SignOut() {
 }
 
 function ChatRoom() {
-  const scrollToDummy = useRef();
+  const messagesEnd = useRef();
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(50);
 
   const [messages] = useCollectionData(query, { idField: 'id' });
   const [formValue, setFormValue] = useState('');
+
+  const scrollToBottom = () => {
+    messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  });
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -100,7 +108,6 @@ function ChatRoom() {
     });
 
     setFormValue('');
-    scrollToDummy.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -108,7 +115,7 @@ function ChatRoom() {
       <main className='messages-container'>
         {messages && messages.map((msg) => <Message key={msg.id} message={msg} />)}
 
-        <span ref={scrollToDummy}></span>
+        <div ref={messagesEnd}></div>
       </main>
 
       <form onSubmit={sendMessage}>
