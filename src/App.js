@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import 'reset-css';
 import './App.css';
 
 import firebase from 'firebase/app';
@@ -8,6 +9,9 @@ import 'firebase/analytics';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+//const analytics = firebase.analytics();
+
+import Linkify from 'react-linkify';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyCLEWjOA7EKrJlbp4Yh0PcPsnEK50TKGr8',
@@ -22,17 +26,22 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-//const analytics = firebase.analytics();
 
 function App() {
   const [user] = useAuthState(auth);
 
   return (
     <div className='App'>
-      <header>
+      <header className='app-header'>
+        <h1>
+          Firebase + React Chat{' '}
+          <span role='img' aria-label='Fire emoji'>
+            🔥
+          </span>
+        </h1>
         <SignOut />
       </header>
-      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+      <section className='chat-wrapper'>{user ? <ChatRoom /> : <SignIn />}</section>
     </div>
   );
 }
@@ -80,12 +89,13 @@ function ChatRoom() {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    const { uid, photoURL } = auth.currentUser;
+    const { uid, displayName, photoURL } = auth.currentUser;
 
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
+      displayName,
       photoURL,
     });
 
@@ -95,7 +105,7 @@ function ChatRoom() {
 
   return (
     <>
-      <main>
+      <main className='messages-container'>
         {messages && messages.map((msg) => <Message key={msg.id} message={msg} />)}
 
         <span ref={scrollToDummy}></span>
@@ -103,27 +113,32 @@ function ChatRoom() {
 
       <form onSubmit={sendMessage}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder='type your message...' />
-        <button type='submit' disabled={!formValue}></button>
+        <button type='submit' disabled={!formValue}>
+          💌
+        </button>
       </form>
     </>
   );
 }
 
 function Message(props) {
-  const { text, uid, photoURL } = props.message;
+  const { text, createdAt, uid, displayName, photoURL } = props.message;
 
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
-  const displayName = auth.currentUser.displayName;
 
   return (
     <>
-      <div className={`message ${messageClass}`}>
+      <div className={`message ${messageClass}`} data-createdAt={createdAt}>
+        <span className='sender-name'>{displayName}</span>
+
         <img
           src={photoURL || `https://eu.ui-avatars.com/api/?name=${displayName}`}
-          alt={`${displayName}'s user avatar`}
+          alt={`${displayName} user avatar`}
         />
 
-        <p>{text}</p>
+        <p>
+          <Linkify>{text}</Linkify>
+        </p>
       </div>
     </>
   );

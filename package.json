@@ -11,7 +11,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-firebase-hooks": "^2.2.0",
-    "react-scripts": "3.4.3"
+    "react-linkify": "^1.0.0-alpha",
+    "react-scripts": "3.4.3",
+    "reset-css": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
