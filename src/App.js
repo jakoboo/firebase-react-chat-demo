@@ -114,7 +114,9 @@ function ChatRoom() {
       <form onSubmit={sendMessage}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder='type your message...' />
         <button type='submit' disabled={!formValue}>
-          💌
+          <span role='img' aria-label='send message (letter emoji)'>
+            💌
+          </span>
         </button>
       </form>
     </>
