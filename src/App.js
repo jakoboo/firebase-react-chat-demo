@@ -68,6 +68,13 @@ const Section = styled.section`
   flex-direction: column;
 `;
 
+const SignInButtons = styled.main`
+  margin-top: 6rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+`;
+
 const Main = styled.main`
   padding: 1rem;
   margin-top: 6rem;
@@ -188,12 +195,14 @@ function SignIn() {
   };
 
   return (
-    <section className='sign-in-wrapper'>
-      <GoogleLoginButton className='sign-in' onClick={signInWith(googleProvider)} />
-      <GithubLoginButton className='sign-in' onClick={signInWith(githubProvider)} />
+    <>
+      <SignInButtons>
+        <GoogleLoginButton className='sign-in' onClick={signInWith(googleProvider)} />
+        <GithubLoginButton className='sign-in' onClick={signInWith(githubProvider)} />
+      </SignInButtons>
 
       <p>Sign in with your google or github account</p>
-    </section>
+    </>
   );
 }
 
