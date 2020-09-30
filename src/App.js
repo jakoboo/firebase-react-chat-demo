@@ -11,6 +11,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 //const analytics = firebase.analytics();
 
+import { GoogleLoginButton, GithubLoginButton } from 'react-social-login-buttons';
 import Linkify from 'react-linkify';
 
 firebase.initializeApp({
@@ -41,7 +42,7 @@ function App() {
         </h1>
         <SignOut />
       </header>
-      <section className='chat-wrapper'>{user ? <ChatRoom /> : <SignIn />}</section>
+      <section className='container'>{user ? <ChatRoom /> : <SignIn />}</section>
     </div>
   );
 }
@@ -55,16 +56,12 @@ function SignIn() {
   };
 
   return (
-    <>
-      <button className='sign-in' onClick={signInWith(googleProvider)}>
-        Sign in with Google
-      </button>
-      <button className='sign-in' onClick={signInWith(githubProvider)}>
-        Sign in with GitHub
-      </button>
+    <section className='sign-in-wrapper'>
+      <GoogleLoginButton className='sign-in' onClick={signInWith(googleProvider)} />
+      <GithubLoginButton className='sign-in' onClick={signInWith(githubProvider)} />
 
       <p>Sign in with your google or github account</p>
-    </>
+    </section>
   );
 }
 
@@ -111,7 +108,7 @@ function ChatRoom() {
   };
 
   return (
-    <>
+    <section className='chat-wrapper'>
       <main className='messages-container'>
         {messages && messages.map((msg) => <Message key={msg.id} message={msg} />)}
 
@@ -126,7 +123,7 @@ function ChatRoom() {
           </span>
         </button>
       </form>
-    </>
+    </section>
   );
 }
 

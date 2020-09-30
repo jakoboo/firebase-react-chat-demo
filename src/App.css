@@ -1,3 +1,8 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap);
+
+header,
+section,
+main,
 div,
 form,
 input,
@@ -7,47 +12,82 @@ img {
   box-sizing: border-box;
 }
 
+html {
+  font-size: clamp(10px, 1vw, 15px);
+}
+
 .App {
   height: 100vh;
-
-  display: flex;
-  flex-direction: column;
+  width: 100vw;
+  overflow: hidden;
 
   text-align: center;
   font-family: Montserrat, Arial, Helvetica, sans-serif;
+  background-color: #f0f0f0;
 }
 
 .app-header {
-  padding: 1rem;
+  padding: 1.5rem;
   width: 100vw;
-  position: fixed;
-  top: 0;
+
+  position: relative;
   z-index: 1000;
 
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+
   background-color: #f0f0f0;
+}
+.app-header h1 {
+  text-align: left;
+  font-size: 3rem;
+  flex-grow: 1;
+}
+.app-header .sign-out {
+  padding: 1rem;
+  margin-left: 1rem;
+  font-size: 2rem;
+
+  background-color: #f0f0f0;
+  border: 0;
+  border-radius: 3rem;
+  box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sign-in-wrapper {
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  text-align: center;
+}
+.sign-in-wrapper p {
+  margin-top: 2rem;
+  font-size: 1.3rem;
 }
 
 .chat-wrapper {
+  position: absolute;
+  bottom: 0;
+
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
 
   background-color: #f0f0f0;
-
-  flex-grow: 1;
 }
 
 .messages-container {
-  padding-top: 6rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-bottom: 6rem;
-  flex-grow: 1;
+  padding: 2rem;
+  overflow: auto;
 
   background-color: #f0f0f0;
 }
 
 .message {
-  margin-bottom: 3rem;
+  margin-top: 3rem;
   display: flex;
   align-items: flex-start;
   position: relative;
@@ -81,7 +121,7 @@ img {
   box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
 
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   line-height: 1.25em;
   word-wrap: break-word;
 }
@@ -89,13 +129,10 @@ img {
 form {
   padding: 1.5rem;
   width: 100vw;
-  position: fixed;
-  bottom: 0;
 
   display: flex;
   flex-flow: row;
-
-  background-color: #f0f0f0;
+  align-items: center;
 }
 
 form input {
@@ -109,7 +146,7 @@ form input {
     inset 5px 5px 10px rgba(0, 0, 0, 0.2);
   outline: 0;
 
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 form button {
