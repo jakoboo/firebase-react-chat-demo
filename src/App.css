@@ -21,6 +21,9 @@ html {
   width: 100vw;
   overflow: hidden;
 
+  display: flex;
+  flex-flow: column;
+
   text-align: center;
   font-family: Montserrat, Arial, Helvetica, sans-serif;
   background-color: #f0f0f0;
@@ -55,11 +58,17 @@ html {
   box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+.container {
+  position: relative;
+  flex-grow: 1;
+}
+
 .sign-in-wrapper {
   margin-top: 5rem;
   margin-left: auto;
   margin-right: auto;
   width: 400px;
+
   text-align: center;
 }
 .sign-in-wrapper p {
@@ -69,6 +78,7 @@ html {
 
 .chat-wrapper {
   position: absolute;
+  top: 0;
   bottom: 0;
 
   display: flex;
@@ -152,6 +162,8 @@ form input {
 form button {
   padding: 1rem;
   margin-left: 1rem;
+  width: 5rem;
+  height: 5rem;
   font-size: 2rem;
 
   background-color: #f0f0f0;
