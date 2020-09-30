@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import 'reset-css';
-import './App.css';
+import { styled } from './styles';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -28,12 +27,145 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
+const AppContainer = styled.div`
+  text-align: center;
+`;
+
+const Header = styled.header`
+  padding: 1rem 2rem;
+  height: 6rem;
+  width: 100%;
+
+  position: fixed;
+  top: 0;
+  z-index: 99;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: ${(p) => p.theme.mainBackground};
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  button {
+    padding: 1rem 1.5rem;
+    font-size: 1.5rem;
+
+    background-color: #f0f0f0;
+    border: 0;
+    border-radius: 3rem;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const Section = styled.section`
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const Main = styled.main`
+  padding: 1rem;
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+
+  overflow-y: auto;
+`;
+
+const MessageContainer = styled.div`
+  margin-top: 3rem;
+  height: auto;
+
+  position: relative;
+
+  display: flex;
+  flex-flow: ${(props) => (props.messageType === 'sent' ? 'row-reverse' : 'row')};
+  align-items: flex-start;
+
+  & > span {
+    position: absolute;
+    top: -1.5rem;
+    padding: 0 6.5rem;
+
+    color: #8b8b8b;
+  }
+
+  img {
+    width: 4rem;
+
+    border-radius: 50%;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  p {
+    margin: 0 2rem;
+    padding: 0.5rem 1rem;
+    max-width: 70%;
+
+    background-color: #f0f0f0;
+    border-radius: 1.5rem;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
+
+    text-align: left;
+    font-size: 1.2rem;
+    line-height: 1.25em;
+    word-wrap: break-word;
+  }
+`;
+
+const Form = styled.form`
+  padding: 1rem;
+  height: 6rem;
+  width: 100%;
+
+  position: fixed;
+  bottom: 0;
+
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: ${(p) => p.theme.mainBackground};
+
+  input {
+    padding: 0.5rem 1rem;
+    width: 100%;
+
+    background-color: #f0f0f0;
+    border: 5px solid #f0f0f0;
+    border-radius: 2.5rem;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px #ffffff,
+      inset 5px 5px 10px rgba(0, 0, 0, 0.2);
+    outline: 0;
+
+    font-size: 1.4rem;
+  }
+
+  button {
+    padding: 1rem;
+    margin-left: 1rem;
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+
+    background-color: #f0f0f0;
+    border: 0;
+    border-radius: 50%;
+    box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+`;
+
 function App() {
   const [user] = useAuthState(auth);
 
   return (
-    <div className='App'>
-      <header className='app-header'>
+    <AppContainer>
+      <Header>
         <h1>
           Firebase + React Chat{' '}
           <span role='img' aria-label='Fire emoji'>
@@ -41,9 +173,9 @@ function App() {
           </span>
         </h1>
         <SignOut />
-      </header>
-      <section className='container'>{user ? <ChatRoom /> : <SignIn />}</section>
-    </div>
+      </Header>
+      <Section>{user ? <ChatRoom /> : <SignIn />}</Section>
+    </AppContainer>
   );
 }
 
@@ -108,45 +240,40 @@ function ChatRoom() {
   };
 
   return (
-    <section className='chat-wrapper'>
-      <main className='messages-container'>
+    <>
+      <Main>
         {messages && messages.map((msg) => <Message key={msg.id} message={msg} />)}
 
         <div ref={messagesEnd}></div>
-      </main>
+      </Main>
 
-      <form onSubmit={sendMessage}>
+      <Form onSubmit={sendMessage}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder='type your message...' />
         <button type='submit' disabled={!formValue}>
           <span role='img' aria-label='send message (letter emoji)'>
             💌
           </span>
         </button>
-      </form>
-    </section>
+      </Form>
+    </>
   );
 }
 
 function Message(props) {
   const { text, createdAt, uid, displayName, photoURL } = props.message;
 
-  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+  const messageType = uid === auth.currentUser.uid ? 'sent' : 'received';
 
   return (
-    <>
-      <div className={`message ${messageClass}`} data-createdAt={createdAt}>
-        <span className='sender-name'>{displayName}</span>
+    <MessageContainer messageType={messageType} data-created-at={createdAt}>
+      <span>{displayName}</span>
 
-        <img
-          src={photoURL || `https://eu.ui-avatars.com/api/?name=${displayName}`}
-          alt={`${displayName} user avatar`}
-        />
+      <img src={photoURL || `https://eu.ui-avatars.com/api/?name=${displayName}`} alt={`${displayName} user avatar`} />
 
-        <p>
-          <Linkify>{text}</Linkify>
-        </p>
-      </div>
-    </>
+      <p>
+        <Linkify>{text}</Linkify>
+      </p>
+    </MessageContainer>
   );
 }
 
