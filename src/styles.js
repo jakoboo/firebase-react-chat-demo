@@ -3,7 +3,7 @@ import reset from 'styled-reset';
 
 export const lightTheme = {
   fontFamily: 'Montserrat, Arial, sans-serif',
-  minFontSize: '10px',
+  minFontSize: '16px',
   maxFontSize: '20px',
   responsiveFontSize: '1vw',
 
@@ -30,12 +30,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    font-size: clamp(10px, 1vw, 20px);
+    font-size: clamp(${(p) => p.theme.minFontSize}, ${(p) => p.theme.responsiveFontSize}, ${(p) =>
+  p.theme.maxFontSize});
   }
 
 	body {
 		font-family: ${(p) => p.theme.fontFamily};
-    font-size: clamp(${(p) => p.theme.minFontSize}, ${(p) => p.theme.respFontSize}, ${(p) => p.theme.maxFontSize});
 		color: ${(p) => p.theme.mainColor};
     
 		background-color: ${(p) => p.theme.mainBackground};

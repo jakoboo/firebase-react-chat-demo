@@ -32,8 +32,8 @@ const AppContainer = styled.div`
 `;
 
 const Header = styled.header`
-  padding: 1rem 2rem;
-  height: 6rem;
+  padding: 0.5rem 1rem;
+  min-height: 6rem;
   width: 100%;
 
   position: fixed;
@@ -47,17 +47,30 @@ const Header = styled.header`
   background-color: ${(p) => p.theme.mainBackground};
 
   h1 {
-    font-size: 3rem;
+    font-size: 1.5rem;
   }
 
   button {
-    padding: 1rem 1.5rem;
-    font-size: 1.5rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 1.25rem;
 
     background-color: #f0f0f0;
     border: 0;
     border-radius: 3rem;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 1rem 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    button {
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+    }
   }
 `;
 
@@ -76,11 +89,15 @@ const SignInButtons = styled.main`
 `;
 
 const Main = styled.main`
-  padding: 1rem;
+  padding: 0.5rem;
   margin-top: 6rem;
   margin-bottom: 6rem;
 
   overflow-y: auto;
+
+  @media screen and (min-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const MessageContainer = styled.div`
@@ -102,14 +119,14 @@ const MessageContainer = styled.div`
   }
 
   img {
-    width: 4rem;
+    width: 3rem;
 
     border-radius: 50%;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
   }
 
   p {
-    margin: 0 2rem;
+    margin: 0 1rem;
     padding: 0.5rem 1rem;
     max-width: 70%;
 
@@ -118,9 +135,15 @@ const MessageContainer = styled.div`
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
 
     text-align: left;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.25em;
     word-wrap: break-word;
+  }
+
+  @media screen and (min-width: 768px) {
+    img {
+      width: 4rem;
+    }
   }
 `;
 
@@ -164,6 +187,12 @@ const Form = styled.form`
     border: 0;
     border-radius: 50%;
     box-shadow: -5px -5px 10px #ffffff, 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  button span {
+    text-align: center;
+    font-size: 2rem;
+    line-height: 2rem;
   }
 `;
 
